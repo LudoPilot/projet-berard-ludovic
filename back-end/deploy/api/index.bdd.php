@@ -31,17 +31,16 @@ function getJWTToken($request)
 }
 
 
-function createJwt (Response $response) : Response {
-    $userid = "emma";
-    $email = "emma@emma.fr";
+function createJwt (Response $response, $userid, $email) : Response {
     $issuedAt = time();
-    $expirationTime = $issuedAt + 600; // jwt valid for 60 seconds from the issued time
+    $expirationTime = $issuedAt + 600; // jwt valide pour 600 secondes (10 minutes) à partir du moment de l'émission
     $payload = array(
         'userid' => $userid,
+        'email' => $email,
         'iat' => $issuedAt,
         'exp' => $expirationTime
     );
-    $token_jwt = JWT::encode($payload,JWT_SECRET, "HS256");
+    $token_jwt = JWT::encode($payload, JWT_SECRET, "HS256");
     $response = $response->withHeader("Authorization", "Bearer {$token_jwt}");
     return $response;
 }
@@ -85,12 +84,13 @@ $app->get('/api/catalogue/{filtre}', function (Request $request, Response $respo
 
 // API Nécessitant un Jwt valide
 $app->get('/api/catalogue', function (Request $request, Response $response, $args) {
-    $flux = '[{"titre":"linux","ref":"001","prix":"20"},{"titre":"java","ref":"002","prix":"21"},{"titre":"windows","ref":"003","prix":"22"},{"titre":"angular","ref":"004","prix":"23"},{"titre":"unix","ref":"005","prix":"25"},{"titre":"javascript","ref":"006","prix":"19"},{"titre":"html","ref":"007","prix":"15"},{"titre":"css","ref":"008","prix":"10"}]';
-    $data = json_decode($flux, true); 
+    $pathToJson = __DIR__ . '/../assets/mock/product-list.json';
+    $json = file_get_contents($pathToJson);
+    $data = json_decode($json, true); 
     
     $response->getBody()->write(json_encode($data));
     
-    return $response;
+    return addHeaders($response);
 });
 
 $app->options('/api/user', function (Request $request, Response $response, $args) {
