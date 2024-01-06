@@ -1,0 +1,22 @@
+<div class="search-container">
+	<h2>Recherche de produits</h2>
+	<form>
+	  <div class="form-group">
+		<label for="productName">Nom du produit:</label>
+		<input type="text" id="productName" [(ngModel)]="searchTerm" name="productName" class="form-control" (input)="filterProducts()" />
+	  </div>
+	  <div class="form-group">
+		<label for="category">Catégorie:</label>
+		<input type="text" id="category" [(ngModel)]="categorySearchTerm" name="categorySearchTerm" class="form-control" (input)="filterProducts()" />
+	  </div>
+	</form>
+  
+	<div class="search-results">
+	  <ul>
+		<li *ngFor="let product of filteredProducts">
+		  {{ product.name }} ({{ product.category }})
+		</li>
+	  </ul>
+	</div>
+  </div>
+  

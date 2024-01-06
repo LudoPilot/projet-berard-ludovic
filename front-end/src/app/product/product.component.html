@@ -1,0 +1,15 @@
+<div class="product-details">
+	<h2>Détails du produit</h2>
+	<ng-container *ngIf="product$ | async as product">
+	  <div>
+		<strong>Nom:</strong> {{ product.name }}
+	  </div>
+	  <div>
+		<strong>Catégorie:</strong> {{ product.category }}
+	  </div>
+	  <div>
+		<strong>Prix:</strong> {{ product.price | currency: 'USD' }}
+	  </div>
+	</ng-container>
+  </div>
+  
