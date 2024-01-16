@@ -36,17 +36,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 		return addHeaders($response);
 	}
 	
-
-	// API Nécessitant un Jwt valide
-	// function getCatalogue (Request $request, Response $response, $args) {
-	// 	$pathToJson = __DIR__ . '/../assets/mock/product-list.json';
-	// 	$json = file_get_contents($pathToJson);
-	// 	$data = json_decode($json, true); 
-		
-	// 	$response->getBody()->write(json_encode($data));
-		
-	// 	return addHeaders ($response);
-	// }
 	function getCatalogue (Request $request, Response $response, $args) {
 		$data = file_get_contents(__DIR__ . '/../assets/mock/product-list.json');
 
@@ -140,7 +129,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 		// Création d'un nouvel utilisateur
 		$nouvelUtilisateur = new Utilisateur();
 		$nouvelUtilisateur->setLogin($login);
-		$nouvelUtilisateur->setPassword($password); // Vous devriez hasher le mot de passe ici
+		$nouvelUtilisateur->setPassword($password); // Hashage à rajouter
 		$entityManager->persist($nouvelUtilisateur);
 		$entityManager->flush();
 	

@@ -20,3 +20,5 @@
 	
 	$app->post('/api/register', 'postRegister');
 
+	$app->post('/api/utilisateur/logout', 'postLogout');
+
