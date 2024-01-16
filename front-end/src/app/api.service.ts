@@ -25,6 +25,11 @@ export class ApiService {
 		);
 	}
 
+	public logoutClient(): Observable<any> {
+		return this.http.post<any>(environment.backendLogoutClient, {});
+	}
+	
+
 	public registerClient(login: string, password: string): Observable<any> {
 		let data = 'login=' + login + '&password=' + password;
 		let httpOptions = {

@@ -137,3 +137,10 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 		return addHeaders($response);
 	}
 	
+	function postLogout(Request $request, Response $response, $args) {
+		$data = array('message' => 'Déconnexion réussie');
+		$response->getBody()->write(json_encode($data));
+		
+		return addHeaders($response)->withStatus(200);
+	}
+	
