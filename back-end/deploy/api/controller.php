@@ -17,36 +17,43 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 	    return $response;
 	}
 	
-	function getSearchCatalogue (Request $request, Response $response, $args) {
+	function getSearchCatalogue(Request $request, Response $response, $args) {
 		$filtre = $args['filtre'];
 		$pathToJson = __DIR__ . '/../assets/mock/product-list.json';
 		$json = file_get_contents($pathToJson);
 		$data = json_decode($json, true); 
 	
 		if ($filtre) {
+			$filtre = strtolower($filtre);
 			$res = array_filter($data, function($obj) use ($filtre) { 
-				return strpos(strtolower($obj["titre"]), strtolower($filtre)) !== false;
+				return strpos(strtolower($obj["name"]), $filtre) !== false || strpos(strtolower($obj["category"]), $filtre) !== false;
 			});
 			$response->getBody()->write(json_encode(array_values($res)));
 		} else {
 			$response->getBody()->write(json_encode($data));
 		}
 	
-		return addHeaders ($response);
+		return addHeaders($response);
 	}
 	
 
 	// API Nécessitant un Jwt valide
+	// function getCatalogue (Request $request, Response $response, $args) {
+	// 	$pathToJson = __DIR__ . '/../assets/mock/product-list.json';
+	// 	$json = file_get_contents($pathToJson);
+	// 	$data = json_decode($json, true); 
+		
+	// 	$response->getBody()->write(json_encode($data));
+		
+	// 	return addHeaders ($response);
+	// }
 	function getCatalogue (Request $request, Response $response, $args) {
-		$pathToJson = __DIR__ . '/../assets/mock/product-list.json';
-		$json = file_get_contents($pathToJson);
-		$data = json_decode($json, true); 
-		
-		$response->getBody()->write(json_encode($data));
-		
-		return addHeaders ($response);
+		$data = file_get_contents(__DIR__ . '/../assets/mock/product-list.json');
+
+	    $response->getBody()->write($data);
+	    
+	    return addHeaders ($response);
 	}
-	
 
 	function optionsUtilisateur (Request $request, Response $response, $args) {
 	    
@@ -79,34 +86,36 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 	// APi d'authentification générant un JWT
 	function postLogin (Request $request, Response $response, $args) {   
-	    global $entityManager;
-	    $err=false;
-	    $body = $request->getParsedBody();
-	    $login = $body ['login'] ?? "";
-	    $pass = $body ['password'] ?? "";
-
-	    if (!preg_match("/[a-zA-Z0-9]{1,20}/",$login))   {
-		$err = true;
-	    }
-	    if (!preg_match("/[a-zA-Z0-9]{1,20}/",$pass))  {
-		$err=true;
-	    }
-	    if (!$err) {
-		$utilisateurRepository = $entityManager->getRepository('Utilisateurs');
-		$utilisateur = $utilisateurRepository->findOneBy(array('login' => $login, 'password' => $pass));
-		if ($utilisateur and $login == $utilisateur->getLogin() and $pass == $utilisateur->getPassword()) {
-		    $response = addHeaders ($response);
-		    $response = createJwT ($response);
-		    $data = array('nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom());
-		    $response->getBody()->write(json_encode($data));
-		} else {          
-		    $response = $response->withStatus(403);
+		global $entityManager;
+		$err = false;
+		$body = $request->getParsedBody();
+		$login = $body['login'] ?? "";
+		$pass = $body['password'] ?? "";
+	
+		if (!preg_match("/[a-zA-Z0-9]{1,20}/", $login)) {
+			$err = true;
 		}
-	    } else {
-		$response = $response->withStatus(500);
-	    }
-
-	    return addHeaders ($response);
+		if (!preg_match("/[a-zA-Z0-9]{1,20}/", $pass)) {
+			$err = true;
+		}
+		if (!$err) {
+			$utilisateurRepository = $entityManager->getRepository('Utilisateurs');
+			$utilisateur = $utilisateurRepository->findOneBy(array('login' => $login, 'password' => $pass));
+			if ($utilisateur && $login == $utilisateur->getLogin() && $pass == $utilisateur->getPassword()) {
+				$userid = $utilisateur->getId();
+				$email = $utilisateur->getEmail();
+	
+				$response = createJwt($response, $userid, $email);
+				$data = array('nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom());
+				$response->getBody()->write(json_encode($data));
+			} else {          
+				$response = $response->withStatus(403);
+			}
+		} else {
+			$response = $response->withStatus(500);
+		}
+	
+		return addHeaders($response);
 	}
 
 	function postRegister(Request $request, Response $response, $args) {

@@ -25,6 +25,20 @@ export class ApiService {
 		);
 	}
 
+	public registerClient(login: string, password: string): Observable<any> {
+		let data = 'login=' + login + '&password=' + password;
+		let httpOptions = {
+			headers: new HttpHeaders({
+				'Content-Type': 'application/x-www-form-urlencoded',
+			}),
+		};
+		return this.http.post<any>(
+			environment.backendRegisterClient,
+			data,
+			httpOptions
+		);
+	}
+	
 	public getCatalog(): Observable<Product[]> {
 		return this.http.get<Product[]>(environment.backendCatalogue);
 	}

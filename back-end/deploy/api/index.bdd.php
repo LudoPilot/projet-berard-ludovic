@@ -70,8 +70,10 @@ $app->get('/api/catalogue/{filtre}', function (Request $request, Response $respo
     $data = json_decode($json, true); 
 
     if ($filtre) {
+        $filtre = strtolower($filtre);
         $res = array_filter($data, function($obj) use ($filtre) { 
-            return strpos(strtolower($obj["titre"]), strtolower($filtre)) !== false;
+            return strpos(strtolower($obj["name"]), $filtre) !== false || 
+                   strpos(strtolower($obj["category"]), $filtre) !== false;
         });
         $response->getBody()->write(json_encode(array_values($res)));
     } else {
@@ -92,6 +94,7 @@ $app->get('/api/catalogue', function (Request $request, Response $response, $arg
     
     return addHeaders($response);
 });
+
 
 $app->options('/api/user', function (Request $request, Response $response, $args) {
     

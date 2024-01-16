@@ -16,6 +16,9 @@ import { CartState } from './stores/cart.state';
 import { ApiService } from './api.service';
 import { ApiHttpInterceptor } from './http-interceptor';
 import { SearchService } from './search.service';
+import { HeaderComponent } from './header/header.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { SearchService } from './search.service';
     ProductComponent,
     CatalogComponent,
     CartComponent,
+	HeaderComponent,
+	RegisterComponent,
+	LoginComponent
   ],
   imports: [
     BrowserModule,
