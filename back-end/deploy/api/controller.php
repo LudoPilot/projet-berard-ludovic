@@ -81,38 +81,35 @@ function getUtilisateur(Request $request, Response $response, $args)
 }
 
 // APi d'authentification générant un JWT
-function postLogin(Request $request, Response $response, $args)
-{
-	global $entityManager;
-	$err = false;
-	$body = $request->getParsedBody();
-	$login = $body['login'] ?? "";
-	$pass = $body['password'] ?? "";
+function postLogin(Request $request, Response $response, $args) {
+    global $entityManager;
+    $body = $request->getParsedBody();
+    $login = $body['login'] ?? "";
+    $pass = $body['password'] ?? "";
 
-	if (!preg_match("/[a-zA-Z0-9]{1,20}/", $login)) {
-		$err = true;
-	}
-	if (!preg_match("/[a-zA-Z0-9]{1,20}/", $pass)) {
-		$err = true;
-	}
-	if (!$err) {
-		$utilisateurRepository = $entityManager->getRepository('Utilisateurs');
-		$utilisateur = $utilisateurRepository->findOneBy(array('login' => $login, 'password' => $pass));
-		if ($utilisateur && $login == $utilisateur->getLogin() && $pass == $utilisateur->getPassword()) {
-			$userid = $utilisateur->getId();
-			$email = $utilisateur->getEmail();
+    if (empty($login) || empty($pass)) {
+        return addHeaders($response->withStatus(400)->write(json_encode(['message' => 'Login et mot de passe requis'])));
+    }
 
-			$response = createJwt($response, $userid, $email);
-			$data = array('nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom());
-			$response->getBody()->write(json_encode($data));
-		} else {
-			$response = $response->withStatus(403);
-		}
-	} else {
-		$response = $response->withStatus(500);
-	}
+    $utilisateurRepository = $entityManager->getRepository('Utilisateurs');
+    $utilisateur = $utilisateurRepository->findOneBy(['login' => $login]);
 
-	return addHeaders($response);
+    if (!$utilisateur) {
+        return addHeaders($response->withStatus(403)->write(json_encode(['message' => 'Utilisateur non trouvé'])));
+    }
+
+    if (!password_verify($pass, $utilisateur->getPassword())) {
+        return addHeaders($response->withStatus(403)->write(json_encode(['message' => 'Mot de passe incorrect'])));
+    }
+
+    $userid = $utilisateur->getId();
+    $email = $utilisateur->getEmail();
+
+    $response = createJwt($response, $userid, $email);
+    $data = ['nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom()];
+    $response->getBody()->write(json_encode($data));
+
+    return addHeaders($response);
 }
 
 function postRegister(Request $request, Response $response, $args) {
