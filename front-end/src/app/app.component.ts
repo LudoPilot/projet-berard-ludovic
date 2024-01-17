@@ -3,6 +3,7 @@ import { ProductService } from './product.service';
 import { ApiService } from './api.service';
 import { SearchService } from './search.service';
 import { debounceTime, distinctUntilChanged, Subject, switchMap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent implements AfterViewInit {
     constructor(
         private productService: ProductService,
         private apiService: ApiService,
-        private searchService: SearchService
+        private searchService: SearchService,
+		private router: Router
     ) { }
 
     ngAfterViewInit(): void {
@@ -57,14 +59,21 @@ export class AppComponent implements AfterViewInit {
     //     );
     // }
 
-    private loadProducts(): void {
-        this.productService.getProducts().subscribe(
-            (data: any[]) => {
-                this.productsAll = data;
-            },
-            (error) => {
-                console.error('Erreur lors du chargement des produits :', error);
-            }
-        );
+    // private loadProducts(): void {
+    //     this.productService.getProducts().subscribe(
+    //         (data: any[]) => {
+    //             this.productsAll = data;
+    //         },
+    //         (error) => {
+    //             console.error('Erreur lors du chargement des produits :', error);
+    //         }
+    //     );
+    // }
+
+	private checkLoginStatus(): void {
+        this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        this.router.events.subscribe(() => {
+            this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        });
     }
 }

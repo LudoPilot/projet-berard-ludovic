@@ -7,46 +7,25 @@ import { RemoveFromCart } from '../stores/cart.action';
 
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+	selector: 'app-cart',
+	templateUrl: './cart.component.html',
+	styleUrls: ['./cart.component.css']
 })
-// export class CartComponent {
-// 	@Select(CartState.cartItems)
-// 	cartItems$: Observable<Product[]>;
-// 	ngOnInit() {}
-  
-// 	constructor(private store: Store) {}
-  
-// 	removeFromCart(productId: number) {
-// 	  this.store.dispatch(new RemoveFromCart(productId));
-// 	}
-// }
 
-/*
 export class CartComponent {
 	@Select(CartState.cartItems)
-	cartItems$: Observable<Product[]> = new Observable<Product[]>();
-  
-	ngOnInit() {}
-	
-	constructor(private store: Store) {}
-  
-	removeFromCart(productId: number) {
-	  this.store.dispatch(new RemoveFromCart(productId));
-	}
-  }
-  */
-
-  export class CartComponent {
-	@Select(CartState.cartItems)
 	cartItems$!: Observable<Product[]>;
-  
-	ngOnInit() {}
-	
-	constructor(private store: Store) {}
-  
+
+	ngOnInit() { }
+
+	constructor(private store: Store) { }
+
 	removeFromCart(productId: number) {
-	  this.store.dispatch(new RemoveFromCart(productId));
+		this.store.dispatch(new RemoveFromCart(productId));
 	}
-  }
+
+	log(value: any) {
+        console.log('Panier mis à jour:', value);
+        return '';
+    }
+}

@@ -2,6 +2,7 @@
     <nav>
         <a *ngIf="!isLoggedIn" routerLink="/login">Connexion</a><br>
         <a *ngIf="!isLoggedIn" routerLink="/register">Inscription</a>
-        <a *ngIf="isLoggedIn" (click)="logout()">Déconnexion</a>
+        <a *ngIf="isLoggedIn" (click)="logout()">Déconnexion</a><br>
+		<a *ngIf="isLoggedIn" routerLink="/cart">Mon Panier</a>
     </nav>
 </header>

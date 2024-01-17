@@ -2,25 +2,27 @@
 	<h2>Catalogue</h2>
 	<table>
 		<thead>
-		  <tr>
-			<th>ID</th>
-			<th>Nom</th>
-			<th>Catégorie</th>
-			<th>Prix</th>
-			<th>Action</th>
-		  </tr>
+			<tr>
+				<th>ID</th>
+				<th>Nom</th>
+				<th>Catégorie</th>
+				<th>Prix</th>
+				<th>Action</th>
+			</tr>
 		</thead>
 		<tbody>
-		  <tr *ngFor="let product of products">
-			<td>{{ product.id }}</td>
-			<td>{{ product.name }}</td>
-			<td>{{ product.category }}</td>
-			<td>{{ product.price | currency: 'USD' }}</td>
-			<td>
-				<button (click)="addToCart(product)">Ajouter au Panier</button>
-			  </td>
-		  </tr>
+			<tr *ngFor="let product of products">
+				<td>{{ product.id }}</td>
+				<td>{{ product.name }}</td>
+				<td>{{ product.category }}</td>
+				<td>{{ product.price | currency: 'USD' }}</td>
+				<td>
+					<button (click)="addToCart(product)">Ajouter au Panier</button>
+				</td>
+			</tr>
 		</tbody>
-	  </table>
-	  
+	</table>
+
+	<app-product-search [products]="products"></app-product-search>
+
 </main>
