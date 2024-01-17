@@ -7,14 +7,19 @@ import { ApiService } from '../api.service';
     styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-    registerForm = { login: '', password: '' };
+    registerForm = {
+		login: '',
+		password: '',
+		nom: '',
+		prenom: '',
+	};
 
     constructor(private apiService: ApiService) {}
 
     register(): void {
-        const { login, password } = this.registerForm;
+        const { login, password, nom, prenom } = this.registerForm;
 
-        this.apiService.registerClient(login, password).subscribe(
+        this.apiService.registerClient(login, password, nom, prenom).subscribe(
             response => {
                 console.log('Inscription réussie', response);
                 // Gérer la réussite de l'inscription

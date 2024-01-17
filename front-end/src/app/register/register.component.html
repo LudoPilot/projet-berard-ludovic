@@ -2,6 +2,14 @@
     <h2>Inscription</h2>
     <form (ngSubmit)="register()">
         <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" name="nom" [(ngModel)]="registerForm.nom" required>
+        </div>
+        <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" name="prenom" [(ngModel)]="registerForm.prenom" required>
+        </div>
+        <div class="form-group">
             <label for="login">Login</label>
             <input type="text" id="login" name="login" [(ngModel)]="registerForm.login" required>
         </div>

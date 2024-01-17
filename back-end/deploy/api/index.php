@@ -11,5 +11,9 @@
 	require_once __DIR__ . '/controller.php';
 	require_once __DIR__ . '/route.php';
 
+	$app->options('/{routes:.+}', function ($request, $response, $args) {
+		return $response;
+	});
+	
 	// Run app
 	$app->run();

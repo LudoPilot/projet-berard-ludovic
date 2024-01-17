@@ -29,20 +29,19 @@ export class ApiService {
 		return this.http.post<any>(environment.backendLogoutClient, {});
 	}
 	
+	public registerClient(login: string, password: string, nom: string, prenom: string): Observable<Client> {
+        // Préparez les données au format JSON
+        const data = {
+            login: login,
+            password: password,
+			nom: nom, 
+			prenom: prenom, 
+        };
 
-	public registerClient(login: string, password: string): Observable<any> {
-		let data = 'login=' + login + '&password=' + password;
-		let httpOptions = {
-			headers: new HttpHeaders({
-				'Content-Type': 'application/x-www-form-urlencoded',
-			}),
-		};
-		return this.http.post<any>(
-			environment.backendRegisterClient,
-			data,
-			httpOptions
-		);
-	}
+        // Notez que l'en-tête 'Content-Type' n'est pas nécessaire ici,
+        // car HttpClient d'Angular définit 'application/json' par défaut
+        return this.http.post<any>(environment.backendRegisterClient, data);
+    }
 	
 	public getCatalog(): Observable<Product[]> {
 		return this.http.get<Product[]>(environment.backendCatalogue);

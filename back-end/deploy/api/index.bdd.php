@@ -96,7 +96,7 @@ $app->get('/api/catalogue', function (Request $request, Response $response, $arg
 });
 
 
-$app->options('/api/user', function (Request $request, Response $response, $args) {
+$app->options('/api/utilisateur', function (Request $request, Response $response, $args) {
     
     // Evite que le front demande une confirmation à chaque modification
     $response = $response->withHeader("Access-Control-Max-Age", 600);
@@ -104,14 +104,14 @@ $app->options('/api/user', function (Request $request, Response $response, $args
     return addHeaders ($response);
 });
 
-// API Nécessitant un Jwt valide
-$app->get('/api/user', function (Request $request, Response $response, $args) {
+// API Nécessitant un Jwt valide // anciennement /api/user
+$app->get('/api/utilisateur', function (Request $request, Response $response, $args) {
     global $entityManager;
     
     $payload = getJWTToken($request);
     $login  = $payload->userid;
     
-    $utilisateurRepository = $entityManager->getRepository('Utilisateur');
+    $utilisateurRepository = $entityManager->getRepository('Utilisateurs');
     $utilisateur = $utilisateurRepository->findOneBy(array('login' => $login));
     if ($utilisateur) {
         $data = array('nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom());
@@ -167,13 +167,17 @@ $options = [
     "algorithm" => ["HS256"],
     "secret" => JWT_SECRET,
     "path" => ["/api"],
-    "ignore" => ["/api/hello","/api/login"],
+    "ignore" => ["/api/hello","/api/utilisateur/login", "/api/register"],
     "error" => function ($response, $arguments) {
         $data = array('ERREUR' => 'Connexion', 'ERREUR' => 'JWT Non valide');
         $response = $response->withStatus(401);
         return $response->withHeader("Content-Type", "application/json")->getBody()->write(json_encode($data));
     }
 ];
+
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
 
 // Chargement du Middleware
 $app->add(new Tuupola\Middleware\JwtAuthentication($options));
