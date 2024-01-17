@@ -19,6 +19,7 @@ import { SearchService } from './search.service';
 import { HeaderComponent } from './header/header.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,9 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     HttpClientModule,
 	NgxsModule.forRoot([CartState]), /* Ici, on aura les classes du Store */ 
+	NgxsStoragePluginModule.forRoot({
+		key: ['cart']
+	  }),
   ],
   providers: [
 	{ provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true },
