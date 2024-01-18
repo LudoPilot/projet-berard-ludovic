@@ -1,10 +1,10 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { Product } from '../models/product.model';// Importez le type Product approprié
-import { AddToCart, RemoveFromCart } from './cart.action';
+import { Product } from '../models/product.model';
+import { AddToCart, ClearCart, RemoveFromCart } from './cart.action';
 import { Injectable } from '@angular/core';
 
 export interface CartStateModel {
-	cartItems: Product[]; // Utilisez le type Product ici
+	cartItems: Product[];
 }
 
 @State<CartStateModel>({
@@ -44,5 +44,10 @@ export class CartState {
 		patchState({
 			cartItems: updatedCartItems,
 		});
+	}
+
+	@Action(ClearCart)
+	clearCart({ setState }: StateContext<CartStateModel>) {
+		setState({ cartItems: [] });
 	}
 }

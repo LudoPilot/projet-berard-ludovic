@@ -1,17 +1,4 @@
-<!-- <div *ngFor="let product of cartItems$ | async">
-	<h3>{{ product.name }}</h3>
-	<p>Prix : {{ product.price | currency: 'USD' }}</p>
-	<button (click)="removeFromCart(product.id)">Retirer le produit du panier</button>
-  </div>
-  
-  <div *ngIf="(cartItems$ | async)?.length === 0">
-	<p>Votre panier est actuellement vide.</p>
-  </div>
-   -->
-
-
-<div *ngFor="let product of cartItems$ | async; let i = index">
-	<!-- Utilisez la méthode log ici -->
+<!-- <div *ngFor="let product of cartItems$ | async; let i = index">
 	<ng-container *ngIf="log(product)"></ng-container>
 
 	<h3>{{ product.name }}</h3>
@@ -21,4 +8,32 @@
 
 <div *ngIf="(cartItems$ | async)?.length === 0">
 	<p>Votre panier est actuellement vide.</p>
+</div>
+
+<div *ngIf="(cartItems$ | async)?.length != 0" class="proceed-to-checkout">
+    <button (click)="proceedToCheckout()">Procéder au paiement</button>
+</div>
+
+<div class="back-to-catalog">
+	<a routerLink="/catalog">Retourner au catalogue</a>
+</div> -->
+
+<div *ngIf="cartItems$ | async as cartItems">
+    <div *ngFor="let product of cartItems; let i = index">
+        <h3>{{ product.name }}</h3>
+        <p>Prix : {{ product.price | currency: 'USD' }}</p>
+        <button (click)="removeFromCart(product.id)">Retirer le produit du panier</button>
+    </div>
+
+    <div *ngIf="cartItems.length === 0">
+        <p>Votre panier est actuellement vide.</p>
+    </div>
+
+    <div *ngIf="cartItems.length > 0" class="proceed-to-checkout">
+        <button (click)="proceedToCheckout()">Procéder au paiement</button>
+    </div>
+</div>
+
+<div class="back-to-catalog">
+    <a routerLink="/catalog">Retourner au catalogue</a>
 </div>

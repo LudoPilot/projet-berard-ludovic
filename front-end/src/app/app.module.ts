@@ -20,6 +20,7 @@ import { HeaderComponent } from './header/header.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
     CartComponent,
 	HeaderComponent,
 	RegisterComponent,
-	LoginComponent
+	LoginComponent,
+	PaymentComponent
   ],
   imports: [
     BrowserModule,

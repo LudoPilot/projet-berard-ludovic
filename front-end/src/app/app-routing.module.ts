@@ -4,6 +4,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { CartComponent } from './cart/cart.component';
+import { PaymentComponent } from './payment/payment.component';
 
 const routes: Routes = [
 	{
@@ -19,6 +20,7 @@ const routes: Routes = [
         component: RegisterComponent,
     },
 	{ path: 'cart', component: CartComponent },
+	{ path: 'checkout', component: PaymentComponent },
 	//{ path: '', redirectTo: '/login', pathMatch: 'full' },
 	//{ path: '**', component: NotFoundComponent }, // chemin non trouvés à rajouter plus tard
 ];
