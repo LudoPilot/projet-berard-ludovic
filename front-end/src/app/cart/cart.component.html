@@ -18,10 +18,18 @@
 	<a routerLink="/catalog">Retourner au catalogue</a>
 </div> -->
 
+
 <div *ngIf="cartItems$ | async as cartItems">
     <div *ngFor="let product of cartItems; let i = index">
         <h3>{{ product.name }}</h3>
         <p>Prix : {{ product.price | currency: 'USD' }}</p>
+        
+        <div class="quantity-controls">
+			<span>Quantité : {{ product.quantity }}</span>
+			<button (click)="increaseQuantity(product)">+</button>
+			<button (click)="decreaseQuantity(product)">-</button>
+        </div>
+        
         <button (click)="removeFromCart(product.id)">Retirer le produit du panier</button>
     </div>
 

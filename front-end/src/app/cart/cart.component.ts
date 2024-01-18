@@ -3,7 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { CartState } from '../stores/cart.state';
 import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
-import { RemoveFromCart } from '../stores/cart.action';
+import { RemoveFromCart, UpdateQuantity } from '../stores/cart.action';
 import { Router } from '@angular/router';
 
 
@@ -19,7 +19,17 @@ export class CartComponent {
 
 	ngOnInit() { }
 
-	constructor(private store: Store, private router: Router) { }
+	constructor(private store: Store, private router: Router) {}
+
+	increaseQuantity(product: Product) {
+		this.store.dispatch(new UpdateQuantity({ productId: product.id, change: 1 }));
+	}
+	
+	decreaseQuantity(product: Product) {
+		if (product.quantity > 1) {
+			this.store.dispatch(new UpdateQuantity({ productId: product.id, change: -1 }));
+		}
+	}
 
 	removeFromCart(productId: number) {
 		this.store.dispatch(new RemoveFromCart(productId));
