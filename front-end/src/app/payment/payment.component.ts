@@ -27,12 +27,16 @@ export class PaymentComponent implements OnInit {
 
 	ngOnInit() {
 		this.cartItems$.subscribe(products => {
-			this.calculateTotal(products);
+			this.calculateTotal();
 		});
 	}
 
-	calculateTotal(products: Product[]) {
-		this.totalAmount = products.reduce((acc, product) => acc + (product.price * product.quantity), 0);
+	calculateTotal() {
+		this.cartItems$.subscribe(products => {
+			this.totalAmount = products.reduce((acc, product) => {
+				return acc + (product.price * (product.quantity ?? 1));
+			}, 0);
+		});
 	}
 
 	onPaymentSubmit() {

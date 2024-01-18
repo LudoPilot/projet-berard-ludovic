@@ -22,16 +22,24 @@ export class CartState {
 	}
 
 	@Action(AddToCart)
-	addToCart(
-		{ getState, patchState }: StateContext<CartStateModel>,
-		{ payload }: AddToCart
-	) {
+	addToCart({ getState, patchState }: StateContext<CartStateModel>, { payload }: AddToCart) {
 		const state = getState();
-		patchState({
-			cartItems: [...state.cartItems, payload],
+		let found = false;
+		const updatedCartItems = state.cartItems.map(item => {
+			if (item.id === payload.id) {
+				found = true;
+				return { ...item, quantity: (item.quantity || 0) + 1 };
+			}
+			return item;
 		});
+	
+		if (!found) {
+			patchState({ cartItems: [...state.cartItems, { ...payload, quantity: 1 }] });
+		} else {
+			patchState({ cartItems: updatedCartItems });
+		}
 	}
-
+	
 	@Action(RemoveFromCart)
 	removeFromCart(
 		{ getState, patchState }: StateContext<CartStateModel>,

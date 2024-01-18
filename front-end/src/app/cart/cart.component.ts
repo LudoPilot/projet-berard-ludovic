@@ -26,7 +26,7 @@ export class CartComponent {
 	}
 	
 	decreaseQuantity(product: Product) {
-		if (product.quantity > 1) {
+		if ((product.quantity || 0) > 1) {
 			this.store.dispatch(new UpdateQuantity({ productId: product.id, change: -1 }));
 		}
 	}

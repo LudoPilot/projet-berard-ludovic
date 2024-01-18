@@ -14,10 +14,6 @@ export class CatalogComponent implements OnInit {
 
 	constructor(private productService: ProductService, private store: Store) { }
 
-	// addToCart(product: Product) {
-	// 	this.store.dispatch(new AddToCart(product));
-	// }
-
     addToCart(product: any) {
         console.log('Ajout au panier:', product);
         this.store.dispatch(new AddToCart(product)).subscribe(() => {
