@@ -1,47 +1,26 @@
-<!-- <div *ngFor="let product of cartItems$ | async; let i = index">
-	<ng-container *ngIf="log(product)"></ng-container>
-
-	<h3>{{ product.name }}</h3>
-	<p>Prix : {{ product.price | currency: 'USD' }}</p>
-	<button (click)="removeFromCart(product.id)">Retirer le produit du panier</button>
-</div>
-
-<div *ngIf="(cartItems$ | async)?.length === 0">
-	<p>Votre panier est actuellement vide.</p>
-</div>
-
-<div *ngIf="(cartItems$ | async)?.length != 0" class="proceed-to-checkout">
-    <button (click)="proceedToCheckout()">Procéder au paiement</button>
-</div>
-
-<div class="back-to-catalog">
-	<a routerLink="/catalog">Retourner au catalogue</a>
-</div> -->
-
-
-<div *ngIf="cartItems$ | async as cartItems">
-    <div *ngFor="let product of cartItems; let i = index">
-        <h3>{{ product.name }}</h3>
-        <p>Prix : {{ product.price | currency: 'USD' }}</p>
-        
-        <div class="quantity-controls">
-			<span>Quantité : {{ product.quantity }}</span>
-			<button (click)="increaseQuantity(product)">+</button>
-			<button (click)="decreaseQuantity(product)">-</button>
-        </div>
-        
-        <button (click)="removeFromCart(product.id)">Retirer le produit du panier</button>
-    </div>
-
-    <div *ngIf="cartItems.length === 0">
+<div class="container mt-4" *ngIf="cartItems$ | async as cartItems">
+    <div *ngIf="cartItems.length === 0" class="alert alert-info">
         <p>Votre panier est actuellement vide.</p>
     </div>
 
-    <div *ngIf="cartItems.length > 0" class="proceed-to-checkout">
-        <button (click)="proceedToCheckout()">Procéder au paiement</button>
+    <div *ngFor="let product of cartItems; let i = index" class="card mb-3">
+        <div class="card-body">
+            <h3 class="card-title">{{ product.name }}</h3>
+            <p class="card-text">Prix : {{ product.price | currency: 'USD' }}</p>
+            <div class="quantity-controls mb-3">
+                <span class="me-2">Quantité : {{ product.quantity }}</span>
+                <button class="btn btn-secondary btn-sm" (click)="increaseQuantity(product)">+</button>
+                <button class="btn btn-secondary btn-sm ms-2" (click)="decreaseQuantity(product)">-</button>
+            </div>
+            <button class="btn btn-danger" (click)="removeFromCart(product.id)">Retirer le produit du panier</button>
+        </div>
+    </div>
+
+    <div *ngIf="cartItems.length > 0" class="proceed-to-checkout text-end">
+        <button class="btn btn-success" (click)="proceedToCheckout()">Procéder au paiement</button>
     </div>
 </div>
 
-<div class="back-to-catalog">
-    <a routerLink="/catalog">Retourner au catalogue</a>
+<div class="text-center mt-4">
+    <a routerLink="/catalog" class="btn btn-link">Retourner au catalogue</a>
 </div>

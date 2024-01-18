@@ -5,8 +5,13 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { CartComponent } from './cart/cart.component';
 import { PaymentComponent } from './payment/payment.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const routes: Routes = [
+	{
+		path: '',
+		component: LandingPageComponent,
+	},
 	{
 		path: 'catalog',
 		component: CatalogComponent,
