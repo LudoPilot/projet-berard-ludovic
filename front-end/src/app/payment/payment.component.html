@@ -1,22 +1,33 @@
-<div class="payment-container">
-    <h2>Détails de paiement</h2>
-    <form (ngSubmit)="onPaymentSubmit()">
-        <div class="form-group">
-            <label for="cardNumber">Numéro de Carte</label>
-            <input type="text" id="cardNumber" [(ngModel)]="paymentDetails.cardNumber" name="cardNumber" required>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <h2 class="card-header">Détails de paiement</h2>
+                <div class="card-body">
+                    <form (ngSubmit)="onPaymentSubmit()">
+                        <div class="mb-3">
+                            <label for="cardNumber" class="form-label">Numéro de Carte</label>
+                            <input type="text" class="form-control" id="cardNumber" [(ngModel)]="paymentDetails.cardNumber" name="cardNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="expiryDate" class="form-label">Date d'expiration</label>
+                            <input type="text" class="form-control" id="expiryDate" [(ngModel)]="paymentDetails.expiryDate" name="expiryDate" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="cardHolderName" class="form-label">Nom du Titulaire</label>
+                            <input type="text" class="form-control" id="cardHolderName" [(ngModel)]="paymentDetails.cardHolderName" name="cardHolderName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="totalAmount" class="form-label">Montant Total</label>
+                            <input type="text" class="form-control" id="totalAmount" [value]="totalAmount | currency: 'EUR'" disabled>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Valider le Paiement</button>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <a routerLink="/cart" class="btn btn-outline-secondary">Retour au Panier</a>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="expiryDate">Date d'expiration</label>
-            <input type="text" id="expiryDate" [(ngModel)]="paymentDetails.expiryDate" name="expiryDate" required>
-        </div>
-        <div class="form-group">
-            <label for="cardHolderName">Nom du Titulaire</label>
-            <input type="text" id="cardHolderName" [(ngModel)]="paymentDetails.cardHolderName" name="cardHolderName" required>
-        </div>
-        <div class="form-group">
-            <label for="totalAmount">Montant Total</label>
-            <input type="text" id="totalAmount" [value]="totalAmount | currency: 'EUR'" disabled>
-        </div>
-        <button type="submit">Valider le Paiement</button>
-    </form>
+    </div>
 </div>
