@@ -22,11 +22,9 @@ export class RegisterComponent {
         this.apiService.registerClient(login, password, nom, prenom).subscribe(
             response => {
                 console.log('Inscription réussie', response);
-                // Gérer la réussite de l'inscription
             },
             error => {
                 console.error('Erreur lors de l’inscription:', error);
-                // Gérer l'erreur d'inscription
             }
         );
     }

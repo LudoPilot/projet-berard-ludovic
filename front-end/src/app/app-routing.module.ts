@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { CartComponent } from './cart/cart.component';
 import { PaymentComponent } from './payment/payment.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
 	{
@@ -23,6 +24,7 @@ const routes: Routes = [
     {
         path: 'register',
         component: RegisterComponent,
+		canActivate: [AuthGuard],
     },
 	{ path: 'cart', component: CartComponent },
 	{ path: 'checkout', component: PaymentComponent },
