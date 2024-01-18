@@ -21,6 +21,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { PaymentComponent } from './payment/payment.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { PaymentComponent } from './payment/payment.component';
 	NgxsModule.forRoot([CartState]), /* Ici, on aura les classes du Store */ 
 	NgxsStoragePluginModule.forRoot({
 		key: ['cart']
-	  }),
+	  }), NgbModule,
   ],
   providers: [
 	{ provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true },
