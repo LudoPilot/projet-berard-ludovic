@@ -1,22 +1,30 @@
-<div class="register-container">
-    <h2>Inscription</h2>
-    <form (ngSubmit)="register()">
-        <div class="form-group">
-            <label for="nom">Nom</label>
-            <input type="text" id="nom" name="nom" [(ngModel)]="registerForm.nom" required>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <h2 class="card-header">Inscription</h2>
+                <div class="card-body">
+                    <form (ngSubmit)="register()">
+                        <div class="mb-3">
+                            <label for="nom" class="form-label">Nom</label>
+                            <input type="text" class="form-control" id="nom" name="nom" [(ngModel)]="registerForm.nom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="prenom" class="form-label">Prénom</label>
+                            <input type="text" class="form-control" id="prenom" name="prenom" [(ngModel)]="registerForm.prenom" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="login" class="form-label">Login</label>
+                            <input type="text" class="form-control" id="login" name="login" [(ngModel)]="registerForm.login" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="password" name="password" [(ngModel)]="registerForm.password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">S'inscrire</button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="prenom">Prénom</label>
-            <input type="text" id="prenom" name="prenom" [(ngModel)]="registerForm.prenom" required>
-        </div>
-        <div class="form-group">
-            <label for="login">Login</label>
-            <input type="text" id="login" name="login" [(ngModel)]="registerForm.login" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Mot de passe</label>
-            <input type="password" id="password" name="password" [(ngModel)]="registerForm.password" required>
-        </div>
-        <button type="submit">S'inscrire</button>
-    </form>
+    </div>
 </div>
