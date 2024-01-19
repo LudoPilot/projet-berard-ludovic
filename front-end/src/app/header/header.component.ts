@@ -12,7 +12,6 @@ import { take } from 'rxjs';
 })
 export class HeaderComponent implements OnInit {
     isLoggedIn = false;
-	//userName: string | null | undefined;
 	userName: string | null = null;
 
     constructor(private router: Router, private store: Store) { }
@@ -38,8 +37,8 @@ export class HeaderComponent implements OnInit {
 		// 
         localStorage.removeItem('jwtToken');
 		localStorage.removeItem('userName');
-		localStorage.removeItem('currentUser'); // ajout
-		this.store.dispatch(new ClearCart()); // ajout
+		localStorage.removeItem('currentUser');
+		this.store.dispatch(new ClearCart());
         this.isLoggedIn = false;
 		this.userName = null;
         this.router.navigate(['/']);

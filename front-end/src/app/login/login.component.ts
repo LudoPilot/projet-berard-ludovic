@@ -36,7 +36,6 @@ export class LoginComponent implements OnInit {
 			},
 			error => {
 				console.error('Erreur lors de la connexion :', error);
-				// Réinitialisation du formulaire en cas d'échec de la connexion
 				this.loginForm = { login: '', password: '' };
 			}
 		);

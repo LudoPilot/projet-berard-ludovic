@@ -41,7 +41,7 @@ export class AppComponent implements AfterViewInit {
 
     onSearch(): void {
         this.searchTerms.next(this.searchTerm);
-		this.searchResults = []; // réinitialisation si on vide la barre après avoir écrit un terme
+		this.searchResults = [];
     }
 
 	private checkLoginStatus(): void {
