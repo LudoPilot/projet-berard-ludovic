@@ -26,10 +26,12 @@ export class CartComponent {
 	}
 	
 	decreaseQuantity(product: Product) {
-		if ((product.quantity || 0) > 1) {
-			this.store.dispatch(new UpdateQuantity({ productId: product.id, change: -1 }));
-		}
-	}
+        if (product.quantity && product.quantity > 1) {
+            this.store.dispatch(new UpdateQuantity({ productId: product.id, change: -1 }));
+        } else {
+            this.store.dispatch(new RemoveFromCart(product.id));
+        }
+    }
 
 	removeFromCart(productId: number) {
 		this.store.dispatch(new RemoveFromCart(productId));
