@@ -1,6 +1,6 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Product } from '../models/product.model';
-import { AddToCart, ClearCart, RemoveFromCart, UpdateQuantity } from './cart.action';
+import { AddToCart, ClearCart, LoadUserCart, RemoveFromCart, UpdateQuantity } from './cart.action';
 import { Injectable } from '@angular/core';
 
 export interface CartStateModel {
@@ -32,14 +32,14 @@ export class CartState {
 			}
 			return item;
 		});
-	
+
 		if (!found) {
 			patchState({ cartItems: [...state.cartItems, { ...payload, quantity: 1 }] });
 		} else {
 			patchState({ cartItems: updatedCartItems });
 		}
 	}
-	
+
 	@Action(RemoveFromCart)
 	removeFromCart(
 		{ getState, patchState }: StateContext<CartStateModel>,
@@ -61,17 +61,23 @@ export class CartState {
 
 	@Action(UpdateQuantity)
 	updateQuantity(ctx: StateContext<CartStateModel>, action: UpdateQuantity) {
-	  const state = ctx.getState();
-	  const updatedCartItems = state.cartItems.map(item => {
-		if (item.id === action.payload.productId) {
-		  const newQuantity = Math.max(1, item.quantity + action.payload.change);
-		  return { ...item, quantity: newQuantity };
-		}
-		return item;
-	  });
-	  ctx.setState({
-		...state,
-		cartItems: updatedCartItems,
-	  });
-	}	
+		const state = ctx.getState();
+		const updatedCartItems = state.cartItems.map(item => {
+			if (item.id === action.payload.productId) {
+				const newQuantity = Math.max(1, item.quantity + action.payload.change);
+				return { ...item, quantity: newQuantity };
+			}
+			return item;
+		});
+		ctx.setState({
+			...state,
+			cartItems: updatedCartItems,
+		});
+	}
+
+	@Action(LoadUserCart)
+	loadUserCart({ patchState }: StateContext<CartStateModel>, { payload }: LoadUserCart) {
+		patchState({ cartItems: payload });
+	}
+
 }

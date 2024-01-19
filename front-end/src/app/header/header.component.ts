@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CartState } from '../stores/cart.state';
+import { ClearCart } from '../stores/cart.action';
+import { Store } from '@ngxs/store';
+import { take } from 'rxjs';
 
 @Component({
     selector: 'app-header',
@@ -11,7 +15,7 @@ export class HeaderComponent implements OnInit {
 	//userName: string | null | undefined;
 	userName: string | null = null;
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private store: Store) { }
 
     ngOnInit(): void {
         this.checkLoginStatus();
@@ -25,8 +29,17 @@ export class HeaderComponent implements OnInit {
     }
 
     logout(): void {
+		const currentUser = localStorage.getItem('currentUser');
+		if (currentUser) {
+			this.store.select(CartState.cartItems).pipe(take(1)).subscribe(cartItems => {
+				localStorage.setItem('cart_' + currentUser, JSON.stringify(cartItems));
+			});
+		}
+		// 
         localStorage.removeItem('jwtToken');
 		localStorage.removeItem('userName');
+		localStorage.removeItem('currentUser'); // ajout
+		this.store.dispatch(new ClearCart()); // ajout
         this.isLoggedIn = false;
 		this.userName = null;
         this.router.navigate(['/']);

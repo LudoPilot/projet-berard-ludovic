@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
+import { LoadUserCart } from '../stores/cart.action';
+import { Store } from '@ngxs/store';
 
 @Component({
     selector: 'app-login',
@@ -10,7 +12,7 @@ import { ApiService } from '../api.service';
 export class LoginComponent implements OnInit {
     loginForm = { login: '', password: '' };
 
-    constructor(private apiService: ApiService, private router: Router) {}
+    constructor(private apiService: ApiService, private router: Router, private store: Store) {}
 
     ngOnInit(): void {
         // Redirection vers '/catalog' si l'utilisateur est déjà connecté
@@ -26,6 +28,10 @@ export class LoginComponent implements OnInit {
 			response => {
 				localStorage.setItem('isLoggedIn', 'true');
 				localStorage.setItem('userName', `${response.nom} ${response.prenom}`);
+				
+				const userCart = JSON.parse(localStorage.getItem('cart_' + login) || '[]');
+				this.store.dispatch(new LoadUserCart(userCart)); 
+
 				this.router.navigate(['/catalog']);
 			},
 			error => {
