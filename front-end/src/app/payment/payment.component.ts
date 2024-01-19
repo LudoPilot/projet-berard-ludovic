@@ -19,7 +19,7 @@ export class PaymentComponent implements OnInit {
 	paymentDetails = {
 		cardNumber: '1234 5678 9101 1121',
 		expiryDate: '03/2027',
-		cardHolderName: 'John Doe',
+		cardHolderName: '',
 
 	};
 
@@ -29,6 +29,10 @@ export class PaymentComponent implements OnInit {
 		this.cartItems$.subscribe(products => {
 			this.calculateTotal();
 		});
+		const userFullName = localStorage.getItem('userName');
+		if (userFullName) {
+			this.paymentDetails.cardHolderName = userFullName;
+		}
 	}
 
 	calculateTotal() {
