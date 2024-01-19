@@ -25,8 +25,7 @@ export class LoginComponent implements OnInit {
 		this.apiService.loginClient(login, password).subscribe(
 			response => {
 				localStorage.setItem('isLoggedIn', 'true');
-	
-				// Redirection vers le catalogue
+				localStorage.setItem('userName', `${response.nom} ${response.prenom}`);
 				this.router.navigate(['/catalog']);
 			},
 			error => {
