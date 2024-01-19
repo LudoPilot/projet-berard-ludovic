@@ -24,6 +24,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { Error403Component } from './error403/error403.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +37,9 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 	RegisterComponent,
 	LoginComponent,
 	PaymentComponent,
+	Error403Component,
 	NotFoundComponent,
-	LandingPageComponent
+	LandingPageComponent,
   ],
   imports: [
     BrowserModule,
