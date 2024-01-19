@@ -30,7 +30,6 @@ export class ApiService {
 	}
 	
 	public registerClient(login: string, password: string, nom: string, prenom: string): Observable<Client> {
-        // Préparez les données au format JSON
         const data = {
             login: login,
             password: password,
@@ -38,8 +37,6 @@ export class ApiService {
 			prenom: prenom, 
         };
 
-        // Notez que l'en-tête 'Content-Type' n'est pas nécessaire ici,
-        // car HttpClient d'Angular définit 'application/json' par défaut
         return this.http.post<any>(environment.backendRegisterClient, data);
     }
 	

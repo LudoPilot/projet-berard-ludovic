@@ -44,32 +44,6 @@ export class AppComponent implements AfterViewInit {
 		this.searchResults = []; // réinitialisation si on vide la barre après avoir écrit un terme
     }
 
-    // login(): void {
-    //     const { login, password } = this.loginForm;
-
-    //     this.apiService.loginClient(login, password).subscribe(
-    //         (client) => {
-    //             this.isLoggedIn = true;
-    //             this.loadProducts();
-    //         },
-    //         (error) => {
-    //             console.error('Erreur lors de la connexion :', error);
-    //             this.loginForm = { login: '', password: '' };
-    //         }
-    //     );
-    // }
-
-    // private loadProducts(): void {
-    //     this.productService.getProducts().subscribe(
-    //         (data: any[]) => {
-    //             this.productsAll = data;
-    //         },
-    //         (error) => {
-    //             console.error('Erreur lors du chargement des produits :', error);
-    //         }
-    //     );
-    // }
-
 	private checkLoginStatus(): void {
         this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         this.router.events.subscribe(() => {

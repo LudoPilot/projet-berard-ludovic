@@ -22,6 +22,7 @@ import { LoginComponent } from './login/login.component';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { PaymentComponent } from './payment/payment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 	HeaderComponent,
 	RegisterComponent,
 	LoginComponent,
-	PaymentComponent
+	PaymentComponent,
+	NotFoundComponent
   ],
   imports: [
     BrowserModule,
