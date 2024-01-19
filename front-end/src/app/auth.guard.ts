@@ -11,18 +11,23 @@ import { Observable } from 'rxjs';
 })
 export class AuthGuard implements CanActivate {
 
-	constructor(private router: Router) { }
+    constructor(private router: Router) { }
 
-	canActivate(
-		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot
-	): Observable<boolean> | Promise<boolean> | boolean {
-		if (localStorage.getItem('jwtToken')) {
-			// Si l'utilisateur est connecté, on le redirige vers la catalogue
-			this.router.navigate(['/catalog']);
-			return false;
-		}
-		// S'il n'est pas connecté, on affiche le formulaire
-		return true;
-	}
+    canActivate(
+        route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot
+    ): Observable<boolean> | Promise<boolean> | boolean {
+        const isLoggedIn = !!localStorage.getItem('jwtToken');
+        const restrictedRoutes = ['/catalog', '/cart', '/checkout'];
+
+        if (restrictedRoutes.includes(state.url) && !isLoggedIn) {
+            this.router.navigate(['/error403']);
+            return false;
+        } else if (state.url === '/register' && isLoggedIn) {
+            this.router.navigate(['/catalog']);
+            return false;
+        }
+        // Accès autorisé pour les autres routes
+        return true;
+    }
 }
