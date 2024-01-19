@@ -23,6 +23,7 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { PaymentComponent } from './payment/payment.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 	RegisterComponent,
 	LoginComponent,
 	PaymentComponent,
-	NotFoundComponent
+	NotFoundComponent,
+	LandingPageComponent
   ],
   imports: [
     BrowserModule,

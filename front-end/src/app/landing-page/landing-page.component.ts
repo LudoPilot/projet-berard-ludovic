@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-landing-page',
-  standalone: true,
-  imports: [],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit {
+	isLoggedIn: boolean = false;
 
+	ngOnInit(): void {
+	  this.isLoggedIn = !!localStorage.getItem('jwtToken');
+	}
 }
