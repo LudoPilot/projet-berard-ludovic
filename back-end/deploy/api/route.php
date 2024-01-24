@@ -1,24 +1,27 @@
 <?php
 
-	$app->get('/api/hello/{name}', 'hello');
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+	return $response;
+});
 
-	$app->options('/api/catalogue', 'optionsCatalogue' );
+$app->get('/api/hello/{name}', 'hello');
 
-	// API Nécessitant un Jwt valide
-	$app->get('/api/catalogue/{filtre}', 'getSearchCatalogue' );
+$app->options('/api/catalogue', 'optionsCatalogue');
 
-	// API Nécessitant un Jwt valide
-	$app->get('/api/catalogue', 'getCatalogue');
+// API Nécessitant un Jwt valide
+$app->get('/api/catalogue/{filtre}', 'getSearchCatalogue');
 
-	$app->options('/api/utilisateur', 'optionsUtilisateur');
+// API Nécessitant un Jwt valide
+$app->get('/api/catalogue', 'getCatalogue');
 
-	// API Nécessitant un Jwt valide
-	$app->get('/api/utilisateur', 'getUtilisateur');
+$app->options('/api/utilisateur', 'optionsUtilisateur');
 
-	// APi d'authentification générant un JWT
-	$app->post('/api/utilisateur/login', 'postLogin');
-	
-	$app->post('/api/register', 'postRegister');
+// API Nécessitant un Jwt valide
+$app->get('/api/utilisateur', 'getUtilisateur');
 
-	$app->post('/api/utilisateur/logout', 'postLogout');
+// APi d'authentification générant un JWT
+$app->post('/api/utilisateur/login', 'postLogin');
 
+$app->post('/api/register', 'postRegister');
+
+$app->post('/api/utilisateur/logout', 'postLogout');
