@@ -12,12 +12,13 @@
 	    $token = JWT::decode($payload,JWT_SECRET , array("HS256"));
 	    return $token; 
 	}
-
-	function createJwt (Response $response, $userid, $email) : Response {
+	// $userid, $email supprimé temporairement des paramètres
+	function createJwt (Response $response) : Response {
 		$issuedAt = time();
 		$expirationTime = $issuedAt + 800; // jwt valide pendant 60 secondes à partir du moment de l'émission
+		$email = 'email@pardefaut.com';
 		$payload = array(
-			'userid' => $userid,
+			//'userid' => $userid,
 			'email' => $email,
 			'iat' => $issuedAt,
 			'exp' => $expirationTime
@@ -46,7 +47,8 @@
 
 	function addHeaders(Response $response): Response {
 		return $response
-			->withHeader("Content-Type", "application/json");
+			->withHeader("Content-Type", "application/json")
+			->withHeader('Access-Control-Expose-Headers', 'Authorization');
 			//->withHeader('Access-Control-Allow-Origin', '*') // Autoriser toutes les origines ou spécifier votre URL frontend
 			// ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
 			// ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')

@@ -105,7 +105,7 @@ function postLogin(Request $request, Response $response, $args) {
     $userid = $utilisateur->getId();
     $email = $utilisateur->getEmail();
 
-    $response = createJwt($response, $userid, $email);
+    $response = createJwt($response); //$response = createJwt($response, $userid, $email);
     $data = ['nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom()];
     $response->getBody()->write(json_encode($data));
 

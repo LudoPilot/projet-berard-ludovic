@@ -16,9 +16,9 @@ function  addHeaders (Response $response) : Response {
     $response = $response
     ->withHeader("Content-Type", "application/json")
     // ->withHeader('Access-Control-Allow-Origin', 'https://projet-berard-ludovic.onrender.com')
-    // ->withHeader('Access-Control-Allow-Headers', 'Content-Type,  Authorization')
-    // ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-    // ->withHeader('Access-Control-Expose-Headers', 'Authorization');
+    ->withHeader('Access-Control-Allow-Headers', 'Content-Type,  Authorization')
+    ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+    ->withHeader('Access-Control-Expose-Headers', 'Authorization');
 
     return $response;
 }
@@ -30,13 +30,13 @@ function getJWTToken($request)
     return $token; 
 }
 
-
-function createJwt (Response $response, $userid, $email) : Response {
+// $user, $email supprimé temporairement
+function createJwt (Response $response) : Response {
     $issuedAt = time();
     $expirationTime = $issuedAt + 600; // jwt valide pour 600 secondes (10 minutes) à partir du moment de l'émission
     $payload = array(
-        'userid' => $userid,
-        'email' => $email,
+        //'userid' => $userid,
+        //'email' => $email,
         'iat' => $issuedAt,
         'exp' => $expirationTime
     );
