@@ -16,7 +16,7 @@ RewriteRule ^api - [L,NC]
 # Pour toutes les autres requêtes, renvoie index.html d'Angular
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+RewriteRule ^ index.php [L]
 
 # CORS Headers
 Header always set Access-Control-Allow-Origin "*"
