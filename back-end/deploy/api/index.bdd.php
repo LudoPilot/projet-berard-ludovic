@@ -12,10 +12,6 @@ require_once __DIR__ . '/../bootstrap.php';
 
 $app = AppFactory::create();
 
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-    return $response;
-});
-
 function  addHeaders (Response $response) : Response {
     $response = $response
     ->withHeader("Content-Type", "application/json")
