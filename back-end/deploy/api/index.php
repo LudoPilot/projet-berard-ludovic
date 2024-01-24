@@ -12,4 +12,9 @@
 	require_once __DIR__ . '/route.php';
 
 	// Run app
+	
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+	return $response;
+});
+
 	$app->run();
