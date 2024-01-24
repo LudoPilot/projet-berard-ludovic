@@ -9,6 +9,7 @@ import { ApiService } from '../api.service';
 export class RegisterComponent {
     registerForm = {
 		login: '',
+		email: '',
 		password: '',
 		nom: '',
 		prenom: '',

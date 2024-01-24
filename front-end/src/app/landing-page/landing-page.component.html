@@ -16,7 +16,7 @@
     <div class="row mt-4">
         <div class="col-12 text-center">
             <a *ngIf="!isLoggedIn" routerLink="/register" class="btn btn-primary">Créer un compte</a>
-            <a href="/catalogue" class="btn btn-secondary">Voir le catalogue</a>
+            <a *ngIf="isLoggedIn" href="/catalogue" class="btn btn-secondary">Voir le catalogue</a>
         </div>
     </div>
 </div>

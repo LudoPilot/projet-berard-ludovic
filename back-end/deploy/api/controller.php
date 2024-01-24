@@ -81,82 +81,88 @@ function getUtilisateur(Request $request, Response $response, $args)
 }
 
 // APi d'authentification générant un JWT
-function postLogin(Request $request, Response $response, $args) {
-    global $entityManager;
-    $body = $request->getParsedBody();
-    $login = $body['login'] ?? "";
-    $pass = $body['password'] ?? "";
+function postLogin(Request $request, Response $response, $args)
+{
+	global $entityManager;
+	$body = $request->getParsedBody();
+	$login = $body['login'] ?? "";
+	$pass = $body['password'] ?? "";
 
-    if (empty($login) || empty($pass)) {
-        return addHeaders($response->withStatus(400)->write(json_encode(['message' => 'Login et mot de passe requis'])));
-    }
+	if (empty($login) || empty($pass)) {
+		return addHeaders($response->withStatus(400)->write(json_encode(['message' => 'Login et mot de passe requis'])));
+	}
 
-    $utilisateurRepository = $entityManager->getRepository('Utilisateurs');
-    $utilisateur = $utilisateurRepository->findOneBy(['login' => $login]);
+	$utilisateurRepository = $entityManager->getRepository('Utilisateurs');
+	$utilisateur = $utilisateurRepository->findOneBy(['login' => $login]);
 
-    if (!$utilisateur) {
-        return addHeaders($response->withStatus(403)->write(json_encode(['message' => 'Utilisateur non trouvé'])));
-    }
+	if (!$utilisateur) {
+		return addHeaders($response->withStatus(403)->write(json_encode(['message' => 'Utilisateur non trouvé'])));
+	}
 
-    if (!password_verify($pass, $utilisateur->getPassword())) {
-        return addHeaders($response->withStatus(403)->write(json_encode(['message' => 'Mot de passe incorrect'])));
-    }
+	if (!password_verify($pass, $utilisateur->getPassword())) {
+		return addHeaders($response->withStatus(403)->write(json_encode(['message' => 'Mot de passe incorrect'])));
+	}
 
-    $userid = $utilisateur->getId();
-    $email = $utilisateur->getEmail();
+	$userid = $utilisateur->getId();
+	$email = $utilisateur->getEmail();
 
-    $response = createJwt($response); //$response = createJwt($response, $userid, $email);
-    $data = ['nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom()];
-    $response->getBody()->write(json_encode($data));
+	$response = createJwt($response); //$response = createJwt($response, $userid, $email);
+	$data = ['nom' => $utilisateur->getNom(), 'prenom' => $utilisateur->getPrenom()];
+	$response->getBody()->write(json_encode($data));
 
-    return addHeaders($response);
+	return addHeaders($response);
 }
 
-function postRegister(Request $request, Response $response, $args) {
-    global $entityManager;
+function postRegister(Request $request, Response $response, $args)
+{
+	global $entityManager;
 
-    $body = json_decode($request->getBody(), true);
-    $nom = $body['nom'] ?? '';
-    $prenom = $body['prenom'] ?? '';
-    $login = $body['login'] ?? '';
-    $password = $body['password'] ?? '';
+	$body = json_decode($request->getBody(), true);
+	$nom = isset($body['nom']) ? htmlspecialchars($body['nom']) : '';
+	$prenom = isset($body['prenom']) ? htmlspecialchars($body['prenom']) : '';
+	$login = isset($body['login']) ? htmlspecialchars($body['login']) : '';
+	$email = $body['email'] ?? '';
+	$password = $body['password'] ?? '';
 
-    // Validation des données
-    if (!preg_match("/[a-zA-Z0-9]{1,20}/", $login) || 
-        !preg_match("/[a-zA-Z0-9]{1,20}/", $password) ||
-        empty($nom) || 
-        empty($prenom)) {
-        $responseBody = json_encode(['message' => 'Données invalides']);
-        $response->getBody()->write($responseBody);
-        return addHeaders($response->withStatus(400));
-    }
+	// Validation des données
+	if (
+		!preg_match("/[a-zA-Z0-9]{1,20}/", $login) ||
+		!preg_match("/[a-zA-Z0-9]{1,20}/", $password) ||
+		empty($nom) ||
+		empty($prenom) ||
+		!filter_var($email, FILTER_VALIDATE_EMAIL)
+	) {
+		$responseBody = json_encode(['message' => 'Données invalides']);
+		$response->getBody()->write($responseBody);
+		return addHeaders($response->withStatus(400));
+	}
 
-    // Vérifier si l'utilisateur existe déjà
-    $conn = $entityManager->getConnection();
-    $sql = "SELECT * FROM Utilisateurs WHERE login = ?";
-    $stmt = $conn->executeQuery($sql, [$login]);
-    $existingUser = $stmt->fetchOne();
+	// Vérifier si l'utilisateur existe déjà
+	$conn = $entityManager->getConnection();
+	$sql = "SELECT * FROM Utilisateurs WHERE login = ?";
+	$stmt = $conn->executeQuery($sql, [$login]);
+	$existingUser = $stmt->fetchOne();
 
-    if ($existingUser) {
-        // Utilisateur existe déjà
-        $responseBody = json_encode(['message' => 'Utilisateur déjà existant']);
-        $response->getBody()->write($responseBody);
-        return addHeaders($response->withStatus(409));
-    } else {
-        // Créer un nouvel utilisateur
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $conn->insert('Utilisateurs', [
-            'nom' => $nom,
-            'prenom' => $prenom,
-            'login' => $login,
-            'password' => $hashedPassword
-        ]);
+	if ($existingUser) {
+		// Utilisateur existe déjà
+		$responseBody = json_encode(['message' => 'Utilisateur déjà existant']);
+		$response->getBody()->write($responseBody);
+		return addHeaders($response->withStatus(409));
+	} else {
+		// Créer un nouvel utilisateur
+		$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+		$conn->insert('Utilisateurs', [
+			'nom' => $nom,
+			'prenom' => $prenom,
+			'login' => $login,
+			'password' => $hashedPassword
+		]);
 
-        // Réponse succès
-        $responseBody = json_encode(['message' => 'Inscription réussie']);
-        $response->getBody()->write($responseBody);
-        return addHeaders($response);
-    }
+		// Réponse succès
+		$responseBody = json_encode(['message' => 'Inscription réussie']);
+		$response->getBody()->write($responseBody);
+		return addHeaders($response);
+	}
 }
 
 
