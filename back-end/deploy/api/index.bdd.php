@@ -15,7 +15,7 @@ $app = AppFactory::create();
 function  addHeaders (Response $response) : Response {
     $response = $response
     ->withHeader("Content-Type", "application/json")
-    ->withHeader('Access-Control-Allow-Origin', ('https://tpbackend.herokuapp.com'))
+    ->withHeader('Access-Control-Allow-Origin', 'https://projet-berard-ludovic.onrender.com')
     ->withHeader('Access-Control-Allow-Headers', 'Content-Type,  Authorization')
     ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
     ->withHeader('Access-Control-Expose-Headers', 'Authorization');
@@ -175,9 +175,9 @@ $options = [
     }
 ];
 
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-    return $response;
-});
+// $app->options('/{routes:.+}', function ($request, $response, $args) {
+//     return $response;
+// });
 
 // Chargement du Middleware
 $app->add(new Tuupola\Middleware\JwtAuthentication($options));

@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 	providedIn: 'root'
 })
 export class ProductService {
-	private productsUrl = environment.backendCatalogue; // récupère l'URL mentionnée dans environment.ts
+	private productsUrl = environment.backendCatalogue;
 
 	constructor(private http: HttpClient) { }
 
