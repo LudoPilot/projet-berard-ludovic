@@ -15,7 +15,7 @@
 
 	function createJwt (Response $response, $userid, $email) : Response {
 		$issuedAt = time();
-		$expirationTime = $issuedAt + 600; // jwt valide pendant 60 secondes à partir du moment de l'émission
+		$expirationTime = $issuedAt + 800; // jwt valide pendant 60 secondes à partir du moment de l'émission
 		$payload = array(
 			'userid' => $userid,
 			'email' => $email,
@@ -46,11 +46,11 @@
 
 	function addHeaders(Response $response): Response {
 		return $response
-			->withHeader("Content-Type", "application/json")
-			->withHeader('Access-Control-Allow-Origin', '*') // Autoriser toutes les origines ou spécifier votre URL frontend
-			->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-			->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-			->withHeader('Access-Control-Expose-Headers', 'Authorization');
+			->withHeader("Content-Type", "application/json");
+			//->withHeader('Access-Control-Allow-Origin', '*') // Autoriser toutes les origines ou spécifier votre URL frontend
+			// ->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+			// ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+			// ->withHeader('Access-Control-Expose-Headers', 'Authorization');
 	}
 
 	// Chargement du Middleware
