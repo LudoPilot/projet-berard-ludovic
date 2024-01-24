@@ -18,13 +18,13 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean> | Promise<boolean> | boolean {
         const isLoggedIn = !!localStorage.getItem('jwtToken');
-        const restrictedRoutes = ['/catalog', '/cart', '/checkout'];
+        const restrictedRoutes = ['/catalogue', '/cart', '/checkout'];
 
         if (restrictedRoutes.includes(state.url) && !isLoggedIn) {
             this.router.navigate(['/error403']);
             return false;
         } else if (state.url === '/register' && isLoggedIn) {
-            this.router.navigate(['/catalog']);
+            this.router.navigate(['/catalogue']);
             return false;
         }
         // Accès autorisé pour les autres routes

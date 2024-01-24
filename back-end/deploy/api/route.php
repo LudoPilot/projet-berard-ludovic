@@ -2,7 +2,6 @@
 
 $app->get('/api/hello/{name}', 'hello');
 
-// Options route for /api/catalogue
 $app->options('/api/catalogue', 'optionsCatalogue');
 
 // API Nécessitant un Jwt valide
@@ -22,4 +21,3 @@ $app->post('/api/utilisateur/login', 'postLogin');
 $app->post('/api/register', 'postRegister');
 
 $app->post('/api/utilisateur/logout', 'postLogout');
-

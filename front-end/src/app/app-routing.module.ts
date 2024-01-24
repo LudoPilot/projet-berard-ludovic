@@ -16,7 +16,7 @@ const routes: Routes = [
 		component: LandingPageComponent,
 	},
 	{
-		path: 'catalog',
+		path: 'catalogue',
 		component: CatalogComponent,
 		canActivate: [AuthGuard]
 	},

@@ -14,17 +14,17 @@ export class CatalogComponent implements OnInit {
 
 	constructor(private productService: ProductService, private store: Store) { }
 
-    addToCart(product: any) {
-        console.log('Ajout au panier:', product);
-        this.store.dispatch(new AddToCart(product)).subscribe(() => {
-            alert('Produit ajouté au panier !');
-        });
-    }
-
 	ngOnInit(): void {
 		this.productService.getProducts().subscribe((products) => {
 			console.log('Données reçues du service :', products);
 			this.products = products;
 		});
 	}
+	
+	addToCart(product: any) {
+        console.log('Ajout au panier:', product);
+        this.store.dispatch(new AddToCart(product)).subscribe(() => {
+            alert('Produit ajouté au panier !');
+        });
+    }
 }
