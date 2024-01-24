@@ -7,14 +7,12 @@ require_once __DIR__ . '/../bootstrap.php';
 
 $app = AppFactory::create();
 
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+	return $response;
+});
 require_once __DIR__ . '/middleware.php';
 require_once __DIR__ . '/controller.php';
 require_once __DIR__ . '/route.php';
 
 // Run app
-
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-	return $response;
-});
-
 $app->run();
