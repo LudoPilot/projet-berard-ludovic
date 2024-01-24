@@ -1,24 +1,10 @@
-# RewriteEngine On
-# RewriteBase /api
-# RewriteCond %{REQUEST_FILENAME} !-f
-# RewriteCond %{REQUEST_FILENAME} !-d
-# RewriteRule ^ /api/index.php [QSA,L]
-
-# # Allow Cross-Origin Resource Sharing (CORS)
-# Header always set Access-Control-Allow-Origin "*"
-# Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-# Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
 RewriteEngine On
-
-# Redirige les requêtes pour l'API vers index.php de l'API
-RewriteRule ^api - [L,NC]
-
-# Pour toutes les autres requêtes, renvoie index.html d'Angular
+RewriteBase /api
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+RewriteRule ^ /api/index.php [QSA,L]
 
-# CORS Headers
+# Allow Cross-Origin Resource Sharing (CORS)
 Header always set Access-Control-Allow-Origin "*"
 Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
 Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Accept, Authorization"
