@@ -44,16 +44,13 @@
 	    }
 	];
 
-	function  addHeaders (Response $response) : Response {
-	    $response = $response
-	    ->withHeader("Content-Type", "application/json")
-	    ->withHeader('Access-Control-Expose-Headers', 'Authorization');
-	    //->withHeader('Access-Control-Allow-Origin', ('https://tpbackend.herokuapp.com'))
-	    //->withHeader('Access-Control-Allow-Headers', 'Content-Type,  Authorization')
-	    //->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
-	    //->withHeader('Access-Control-Expose-Headers', 'Authorization');
-
-	    return $response;
+	function addHeaders(Response $response): Response {
+		return $response
+			->withHeader("Content-Type", "application/json")
+			->withHeader('Access-Control-Allow-Origin', '*') // Autoriser toutes les origines ou spécifier votre URL frontend
+			->withHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+			->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+			->withHeader('Access-Control-Expose-Headers', 'Authorization');
 	}
 
 	// Chargement du Middleware
