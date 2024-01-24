@@ -1,8 +1,10 @@
 <?php
 
-$app->options('/{routes:.+}', function ($request, $response, $args) {
-	return $response;
-});
+$app->options('/api/catalogue', 'optionsCatalogue');
+
+// $app->options('/{routes:.+}', function ($request, $response, $args) {
+// 	return $response;
+// });
 
 $app->get('/api/hello/{name}', 'hello');
 
