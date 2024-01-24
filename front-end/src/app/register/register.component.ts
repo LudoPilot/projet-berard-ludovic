@@ -18,9 +18,9 @@ export class RegisterComponent {
     constructor(private apiService: ApiService) {}
 
     register(): void {
-        const { login, password, nom, prenom } = this.registerForm;
+        const { login, password, email, nom, prenom } = this.registerForm;
 
-        this.apiService.registerClient(login, password, nom, prenom).subscribe(
+        this.apiService.registerClient(login, password, email, nom, prenom).subscribe(
             response => {
                 console.log('Inscription réussie', response);
             },

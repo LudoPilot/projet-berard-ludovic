@@ -29,8 +29,9 @@ export class ApiService {
 		return this.http.post<any>(environment.backendLogoutClient, {});
 	}
 	
-	public registerClient(login: string, password: string, nom: string, prenom: string): Observable<Client> {
+	public registerClient(login: string, password: string, email: string, nom: string, prenom: string): Observable<Client> {
         const data = {
+			email: email,
             login: login,
             password: password,
 			nom: nom, 
