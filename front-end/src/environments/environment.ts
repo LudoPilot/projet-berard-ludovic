@@ -1,8 +1,8 @@
 export const environment = {
 	production: true,
-	backendRegisterClient: 'https://projet-berard-ludovic.onrender.com/api/register',
-	backendLoginClient: 'https://projet-berard-ludovic.onrender.com/api/utilisateur/login',
-	backendCatalogue: 'https://projet-berard-ludovic.onrender.com/api/catalogue',
-	backendCatalogueSearch: 'https://projet-berard-ludovic.onrender.com/api/catalogue/{filtre}',
-	backendLogoutClient: 'https://projet-berard-ludovic.onrender.com/api/utilisateur/logout'
+	backendRegisterClient: '/api/register',
+	backendLoginClient: '/api/utilisateur/login',
+	backendCatalogue: '/api/catalogue',
+	backendCatalogueSearch: '/api/catalogue/{filtre}',
+	backendLogoutClient: '/api/utilisateur/logout'
 };
