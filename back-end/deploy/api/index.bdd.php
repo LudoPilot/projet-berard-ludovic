@@ -12,6 +12,10 @@ require_once __DIR__ . '/../bootstrap.php';
 
 $app = AppFactory::create();
 
+$app->options('/{routes:.+}', function ($request, $response, $args) {
+    return $response;
+});
+
 function  addHeaders (Response $response) : Response {
     $response = $response
     ->withHeader("Content-Type", "application/json")
@@ -174,10 +178,6 @@ $options = [
         return $response->withHeader("Content-Type", "application/json")->getBody()->write(json_encode($data));
     }
 ];
-
-// $app->options('/{routes:.+}', function ($request, $response, $args) {
-//     return $response;
-// });
 
 // Chargement du Middleware
 $app->add(new Tuupola\Middleware\JwtAuthentication($options));
