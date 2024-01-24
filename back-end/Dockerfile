@@ -37,5 +37,5 @@ RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
 # Exposer le port 80 pour permettre les connexions entrantes
 EXPOSE 80
 
-# Définir l'entrée de l'application
+# Définir l'entrée de l'application back end
 CMD ["apache2-foreground"]
