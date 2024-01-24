@@ -6,7 +6,7 @@ $app->options('/{routes:.+}', function ($request, $response, $args) {
 
 $app->get('/api/hello/{name}', 'hello');
 
-$app->options('/api/catalogue', 'optionsCatalogue');
+//$app->options('/api/catalogue', 'optionsCatalogue');
 
 // API Nécessitant un Jwt valide
 $app->get('/api/catalogue/{filtre}', 'getSearchCatalogue');
